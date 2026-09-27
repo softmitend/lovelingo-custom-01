@@ -472,19 +472,24 @@ function observePathLine() {
 }
 
 function stablePathPoint(stageRect, node) {
-  const stop = node.closest(".path-stop");
-  if (!stop) {
-    const rect = node.getBoundingClientRect();
-    return {
-      x: rect.left - stageRect.left + rect.width / 2,
-      y: rect.top - stageRect.top + rect.height / 2
-    };
+  const rect = node.getBoundingClientRect();
+  let ownTranslateX = 0;
+  let ownTranslateY = 0;
+  const transform = getComputedStyle(node).transform;
+
+  if (transform && transform !== "none") {
+    try {
+      const matrix = new DOMMatrixReadOnly(transform);
+      ownTranslateX = matrix.m41;
+      ownTranslateY = matrix.m42;
+    } catch {
+      // The visual center is still a safe fallback in older browsers.
+    }
   }
 
-  const stopRect = stop.getBoundingClientRect();
   return {
-    x: stopRect.left - stageRect.left + stopRect.width / 2,
-    y: stopRect.top - stageRect.top + node.offsetTop + node.offsetHeight / 2
+    x: rect.left - stageRect.left + rect.width / 2 - ownTranslateX,
+    y: rect.top - stageRect.top + rect.height / 2 - ownTranslateY
   };
 }
 
