@@ -7,6 +7,7 @@ const EXTERNAL_KEY = "lovelingo-custom-01-external-course-opened";
 let giftAudio = null;
 let chestWasNaturallyUnlocked = false;
 let enhancing = false;
+let customerPathObserver = null;
 
 function hasOpenedExternalCourse() {
   return localStorage.getItem(EXTERNAL_KEY) === "yes";
@@ -20,7 +21,9 @@ function openExternalCourse() {
   localStorage.setItem(EXTERNAL_KEY, "yes");
   window.open(EXTERNAL_COURSE_URL, "_blank", "noopener,noreferrer");
   const label = document.querySelector("[data-external-course] .lesson-copy span");
+  const node = document.querySelector("[data-external-course] .custom-external-node");
   setTextIfChanged(label, "Sudah dibuka • buka lagi");
+  node?.classList.add("custom-external-visited");
   guardChest();
 }
 
@@ -34,7 +37,7 @@ function ensureExternalCourse() {
   node.className = "path-stop right custom-external-stop";
   node.dataset.externalCourse = "true";
   node.innerHTML = `
-    <button class="lesson-node unlocked custom-external-node" type="button" aria-label="Buka course tambahan">
+    <button class="lesson-node unlocked custom-external-node ${done ? "custom-external-visited" : ""}" type="button" aria-label="Buka course tambahan">
       <span class="node-face"><span class="custom-external-icon"><i class="bi bi-box-arrow-up-right"></i></span></span>
     </button>
     <div class="lesson-copy unlocked">
@@ -44,6 +47,51 @@ function ensureExternalCourse() {
   `;
   node.querySelector("button")?.addEventListener("click", openExternalCourse);
   chestStop.before(node);
+  watchCustomerPath(stage);
+  requestAnimationFrame(syncCustomerPathLine);
+}
+
+function syncCustomerPathLine() {
+  const stage = document.querySelector(".path-stage");
+  const svg = stage?.querySelector(".path-line");
+  const path = svg?.querySelector("path");
+  if (!stage || !svg || !path) return;
+
+  const nodes = [
+    ...stage.querySelectorAll(".lesson-node:not(.custom-external-node)"),
+    stage.querySelector(".custom-external-node"),
+    stage.querySelector(".chest-node")
+  ].filter(Boolean);
+  if (nodes.length < 2) return;
+
+  const stageRect = stage.getBoundingClientRect();
+  const width = stage.clientWidth;
+  const height = stage.scrollHeight;
+  const points = nodes.map((node) => {
+    const rect = node.getBoundingClientRect();
+    return {
+      x: rect.left - stageRect.left + rect.width / 2,
+      y: rect.top - stageRect.top + rect.height / 2
+    };
+  });
+
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute("preserveAspectRatio", "none");
+  let d = `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+  for (let i = 1; i < points.length; i += 1) {
+    const previous = points[i - 1];
+    const point = points[i];
+    const midY = (previous.y + point.y) / 2;
+    d += ` C ${previous.x.toFixed(2)} ${midY.toFixed(2)}, ${point.x.toFixed(2)} ${midY.toFixed(2)}, ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
+  }
+  path.setAttribute("d", d);
+}
+
+function watchCustomerPath(stage) {
+  if (!("ResizeObserver" in window)) return;
+  customerPathObserver?.disconnect();
+  customerPathObserver = new ResizeObserver(() => requestAnimationFrame(syncCustomerPathLine));
+  customerPathObserver.observe(stage);
 }
 
 function guardChest() {
@@ -144,6 +192,7 @@ function enhanceHome() {
   try {
     ensureExternalCourse();
     guardChest();
+    requestAnimationFrame(syncCustomerPathLine);
   } finally {
     enhancing = false;
   }
@@ -156,5 +205,6 @@ const observer = new MutationObserver(() => {
 });
 
 observer.observe(document.documentElement, { childList: true, subtree: true });
+window.addEventListener("resize", () => requestAnimationFrame(syncCustomerPathLine));
 window.addEventListener("load", enhanceHome);
 enhanceHome();
