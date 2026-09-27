@@ -39,7 +39,7 @@ function ensureExternalCourse() {
   node.dataset.externalCourse = "true";
   node.innerHTML = `
     <button class="lesson-node unlocked custom-external-node ${done ? "custom-external-visited" : ""}" type="button" aria-label="Buka course tambahan">
-      <span class="node-face"><span class="custom-external-icon"><i class="bi bi-box-arrow-up-right"></i></span></span>
+      <span class="node-face"><span class="custom-external-icon"><i class="bi bi-journal-bookmark-fill"></i></span></span>
     </button>
     <div class="lesson-copy unlocked">
       <strong>Course tambahan</strong>
