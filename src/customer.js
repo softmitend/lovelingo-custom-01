@@ -1,3 +1,5 @@
+import { experience } from "./data.js";
+
 const EXTERNAL_COURSE_URL = "https://shortlink.win/1yTtJ";
 const NOTION_GIFT_URL = "https://app.notion.com/p/Karena-ini-harimu-maka-tersenyumlah-3e6a0474ccce80cfb38bee4a26bc3d60?source=copy_link";
 const CERTIFICATE_URL = "/assets/certificate-adoption.pdf";
@@ -14,11 +16,23 @@ function hasOpenedExternalCourse() {
   return localStorage.getItem(EXTERNAL_KEY) === "yes";
 }
 
+function areInternalLessonsComplete() {
+  try {
+    const progress = JSON.parse(localStorage.getItem("lovelingo-progress-v1"));
+    const completed = Array.isArray(progress?.completed) ? progress.completed : [];
+    return experience.lessons.every((lesson) => completed.includes(lesson.id));
+  } catch {
+    return false;
+  }
+}
+
 function setTextIfChanged(element, text) {
   if (element && element.textContent !== text) element.textContent = text;
 }
 
 function openExternalCourse() {
+  if (!areInternalLessonsComplete()) return;
+
   localStorage.setItem(EXTERNAL_KEY, "yes");
   window.open(EXTERNAL_COURSE_URL, "_blank", "noopener,noreferrer");
   const label = document.querySelector("[data-external-course] .lesson-copy span");
@@ -34,22 +48,47 @@ function ensureExternalCourse() {
   if (!stage || !chestStop || stage.querySelector("[data-external-course]")) return;
 
   const done = hasOpenedExternalCourse();
+  const unlocked = areInternalLessonsComplete();
   const node = document.createElement("div");
   node.className = "path-stop right custom-external-stop";
   node.dataset.externalCourse = "true";
   node.innerHTML = `
-    <button class="lesson-node unlocked custom-external-node ${done ? "custom-external-visited" : ""}" type="button" aria-label="Buka course tambahan">
+    <button class="lesson-node ${unlocked ? "unlocked" : "locked"} custom-external-node ${done ? "custom-external-visited" : ""}" type="button" ${unlocked ? "" : "disabled"} aria-label="${unlocked ? "Buka course tambahan" : "Selesaikan semua lesson untuk membuka course tambahan"}">
       <span class="node-face"><span class="custom-external-icon"><i class="bi bi-journal-bookmark-fill"></i></span></span>
     </button>
-    <div class="lesson-copy unlocked">
+    <div class="lesson-copy ${unlocked ? "unlocked" : "locked"}">
       <strong>Course tambahan</strong>
-      <span>${done ? "Sudah dibuka • buka lagi" : "Buka course di web luar"}</span>
+      <span>${unlocked ? (done ? "Sudah dibuka • buka lagi" : "Buka course di web luar") : "Selesaikan semua lesson dulu"}</span>
     </div>
   `;
   node.querySelector("button")?.addEventListener("click", openExternalCourse);
   chestStop.before(node);
   watchCustomerPath(stage);
   requestAnimationFrame(syncCustomerPathLine);
+}
+
+function syncExternalCourse() {
+  const wrapper = document.querySelector("[data-external-course]");
+  const node = wrapper?.querySelector(".custom-external-node");
+  const copy = wrapper?.querySelector(".lesson-copy");
+  const subtitle = copy?.querySelector("span");
+  if (!node || !copy) return;
+
+  const unlocked = areInternalLessonsComplete();
+  const done = hasOpenedExternalCourse();
+  node.disabled = !unlocked;
+  node.classList.toggle("unlocked", unlocked);
+  node.classList.toggle("locked", !unlocked);
+  copy.classList.toggle("unlocked", unlocked);
+  copy.classList.toggle("locked", !unlocked);
+  node.setAttribute(
+    "aria-label",
+    unlocked ? "Buka course tambahan" : "Selesaikan semua lesson untuk membuka course tambahan"
+  );
+  setTextIfChanged(
+    subtitle,
+    unlocked ? (done ? "Sudah dibuka • buka lagi" : "Buka course di web luar") : "Selesaikan semua lesson dulu"
+  );
 }
 
 function syncCustomerPathLine() {
@@ -195,6 +234,7 @@ function enhanceHome() {
   enhancing = true;
   try {
     ensureExternalCourse();
+    syncExternalCourse();
     guardChest();
     requestAnimationFrame(syncCustomerPathLine);
   } finally {
