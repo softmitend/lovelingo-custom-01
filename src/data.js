@@ -1,45 +1,174 @@
 export const experience = {
   brand: "lovelingo",
-  recipient: "sayang",
-  sender: "someone who loves you",
-  section: "SECTION 1",
+  recipient: "Ryues Ako",
+  sender: "the love of your life",
+  section: "BIRTHDAY PROJECT",
   unit: "UNIT 1",
-  unitTitle: "A little journey about us",
-  guidebookTitle: "Tentang perjalanan ini",
-  guidebookText: "Selesaikan tiga pelajaran kecil secara berurutan. Setelah itu ada satu course tambahan dan chest terakhir untukmu.",
+  unitTitle: "Ryues Ako's birthday project",
+  guidebookTitle: "Your birthday mission",
+  guidebookText:
+    "Selesaikan tiga pelajaran kecil tentang kita. Setelah itu, buka course tambahan dan final chest yang sudah aku siapin khusus buat kamu.",
   topThreeCards: [
-    { title: "Top 3 hal favorit tentang kamu", subtitle: "Kalau harus dipilih, ini tiga yang paling sering muncul di kepalaku.", items: ["Cara kamu membuat hal sederhana terasa lebih hangat.", "Perhatian kecilmu yang sering kamu anggap biasa saja.", "Fakta bahwa kehadiranmu selalu terasa menenangkan."] },
-    { title: "Top 3 memori kecil kita", subtitle: "Bukan yang paling mewah, tapi yang paling tinggal.", items: ["Obrolan random yang malah bikin betah berlama-lama.", "Momen ketika aku senyum sendiri cuma karena kabarmu.", "Saat bersama kamu dan waktu terasa lewat terlalu cepat."] }
+    {
+      title: "Top 3 things I love about you",
+      subtitle: "There are a million things to love, but these three always get me.",
+      items: [
+        "Your voice - suara favorit yang nggak pernah bikin aku bosen.",
+        "Your way with words - somehow kamu selalu tahu apa yang harus dikatakan.",
+        "Your love language - every little thing you do always makes me feel loved."
+      ]
+    },
+    {
+      title: "Top 3 favorite memories of us",
+      subtitle: "The moments that still live rent-free in my head.",
+      items: [
+        "First time we met - siapa sangka dari teman di group chat kita bisa pacaran dan awet sampai sekarang?",
+        "When I realized you were trying to get closer to me - tiba-tiba affectionate banget, and I surprisingly liked it hehe.",
+        "All the gifts and effort you've given me - knowing you were thinking of me while making them makes everything feel even more special."
+      ]
+    }
   ],
   finalCard: {
-    eyebrow: "YOU UNLOCKED A GIFT",
-    title: "Untuk kamu,",
+    eyebrow: "YOU UNLOCKED A BIRTHDAY LETTER",
+    title: "For my birthday boy,",
     paragraphs: [
-      "Aku mungkin tidak selalu pandai merangkai semuanya dalam satu napas, jadi aku menyembunyikannya di perjalanan kecil ini.",
-      "Ada satu hadiah yang tidak bisa benar-benar dimasukkan ke dalam chest, jadi aku titipkan jalannya di sini.",
-      "Buka satu per satu, ya. Ada sesuatu yang ditulis khusus untukmu, dan ada satu sertifikat kecil yang menyimpan cerita yang lebih besar."
+      "Happiest birthday to my favorite person in the world. You're the best person I could ever ask for, and I genuinely don't know where I'd be without you.",
+      "You're the funniest, sweetest, and most loving person ever. You always make me smile whenever I'm upset, and I'm so lucky that I met you. Thank you for always loving me and being there for me.",
+      "I want you to know how loved you are, not just because it's your birthday, but because every single day you deserve the world. I never want to lose you. I hope you have an amazing birthday. I love you more than anything, and you will always be my person in every universe.",
+      "I'm really glad that every day I get to call you mine. It's a blessing, and I'm forever grateful that God put you in my life. I promise to always stay by your side and love you with all my heart. You've done nothing but make me the happiest person alive, and I can't thank you enough for that. Happy, happy birthday, cintaku. 🤍"
     ],
-    closing: "with all my heart,",
-    signature: "your favorite person"
+    closing: "from the deepest part of my heart, from your prettiest lover,",
+    signature: "Athariel"
   },
   lessons: [
-    { id: "lesson-1", label: "Kenali perasaannya", shortLabel: "Start here", icon: "heart", accent: "green", exercises: [
-      { type: "choice", prompt: "Pilih jawaban yang paling tepat", question: "Hal sederhana yang paling sering membuat hariku lebih baik adalah...", choices: ["tidur siang", "mendengar kabarmu", "scroll tanpa tujuan"], answer: "mendengar kabarmu", success: "Yep. Sesederhana itu." },
-      { type: "arrange", prompt: "Susun kalimat ini", hint: "A little truth", sentence: "aku selalu senang ketika ada pesan darimu", distractors: ["mungkin", "nanti"] },
-      { type: "match", prompt: "Pasangkan yang cocok", pairs: [["senyummu", "mood booster"], ["pesanmu", "notification favorit"], ["namamu", "yang kucari di layar"]] },
-      { type: "fill", prompt: "Lengkapi kalimat", sentence: "Dari banyak orang, aku paling suka menghabiskan waktu dengan ____.", choices: ["kamu", "deadline", "alarm"], answer: "kamu" }
-    ]},
-    { id: "lesson-2", label: "Hal kecil tentang kita", shortLabel: "Keep going", icon: "heart", accent: "green", exercises: [
-      { type: "listen", prompt: "Dengarkan dan pilih kalimatnya", speech: "Aku suka bagaimana kamu bisa membuat hal biasa terasa spesial.", choices: ["Aku suka bagaimana kamu bisa membuat hal biasa terasa spesial.", "Aku sedang mencari charger yang hilang.", "Hari ini sepertinya akan hujan."], answer: "Aku suka bagaimana kamu bisa membuat hal biasa terasa spesial." },
-      { type: "choice", prompt: "Pilih yang paling masuk akal", question: "Kalau aku tiba-tiba tersenyum melihat layar, kemungkinan besar karena...", choices: ["kamu", "update aplikasi", "baterai 100%"], answer: "kamu" },
-      { type: "arrange", prompt: "Susun potongan pesannya", hint: "No translation needed", sentence: "bersamamu momen kecil terasa layak diingat", distractors: ["sangat", "kadang"] },
-      { type: "match", prompt: "Cocokkan memori dan rasanya", pairs: [["obrolan random", "betah"], ["ketawa bareng", "hangat"], ["waktu bersamamu", "terlalu cepat"]] }
-    ]},
-    { id: "lesson-3", label: "Satu pesan terakhir", shortLabel: "Almost there", icon: "crown", accent: "green", exercises: [
-      { type: "fill", prompt: "Isi kata yang hilang", sentence: "Aku mungkin tidak selalu bilang, tapi aku benar-benar ____ kamu.", choices: ["menghargai", "mengabaikan", "melupakan"], answer: "menghargai" },
-      { type: "listen", prompt: "Dengarkan pesan pendek ini", speech: "Terima kasih sudah menjadi bagian favorit dari banyak hariku.", choices: ["Terima kasih sudah menjadi bagian favorit dari banyak hariku.", "Terima kasih sudah mengingatkan jadwal besok.", "Terima kasih sudah membaca sampai sini."], answer: "Terima kasih sudah menjadi bagian favorit dari banyak hariku." },
-      { type: "choice", prompt: "Satu pertanyaan terakhir", question: "Siapa tokoh utama dari perjalanan mini ini?", choices: ["kamu", "aku", "burung hijau yang tidak ada di sini"], answer: "kamu" },
-      { type: "arrange", prompt: "Susun kalimat penutup", hint: "Final answer", sentence: "dari semua pilihan aku tetap memilih kamu", distractors: ["mungkin", "besok"] }
-    ]}
+    {
+      id: "lesson-1",
+      label: "All about you",
+      shortLabel: "Start here, sayang",
+      icon: "heart",
+      accent: "green",
+      exercises: [
+        {
+          type: "choice",
+          prompt: "Pilih jawaban yang paling tepat",
+          question: "Dari semua hal random, mana yang langsung bikin aku keinget kamu?",
+          choices: ["warna putih", "warna ungu", "warna oranye"],
+          answer: "warna putih",
+          success: "White will always remind me of you."
+        },
+        {
+          type: "arrange",
+          prompt: "Susun birthday message ini",
+          hint: "A little birthday wish",
+          sentence: "selamat ulang tahun sayang",
+          distractors: ["besok", "mungkin"]
+        },
+        {
+          type: "match",
+          prompt: "Pasangkan hal favoritku tentang kamu",
+          pairs: [
+            ["your voice", "my favorite sound"],
+            ["your words", "always get me"],
+            ["your love language", "makes me feel loved"]
+          ]
+        },
+        {
+          type: "fill",
+          prompt: "Lengkapi kalimat",
+          sentence: "Aku paling suka kalau kamu manggil aku ____.",
+          choices: ["cantik", "boskyuh", "ragebaiter"],
+          answer: "cantik"
+        }
+      ]
+    },
+    {
+      id: "lesson-2",
+      label: "Our little story",
+      shortLabel: "Keep going, cintaku",
+      icon: "heart",
+      accent: "green",
+      exercises: [
+        {
+          type: "listen",
+          prompt: "Dengarkan birthday wish ini",
+          speech: "Semoga di hari ulang tahun kamu ini, kamu dikelilingi sama orang dan hal yang kamu cintai.",
+          choices: [
+            "Semoga di hari ulang tahun kamu ini, kamu dikelilingi sama orang dan hal yang kamu cintai.",
+            "Semoga hari ini kamu menang terus waktu mabar.",
+            "Semoga hari ini kamu bisa tidur tiga kali."
+          ],
+          answer: "Semoga di hari ulang tahun kamu ini, kamu dikelilingi sama orang dan hal yang kamu cintai."
+        },
+        {
+          type: "choice",
+          prompt: "Flashback sebentar",
+          question: "Kita pertama kali kenal lewat mana?",
+          choices: ["Gods group chat", "Roblox", "Mobile Legends"],
+          answer: "Gods group chat",
+          success: "Berawal dari becanda dan ragebait, ended up being us."
+        },
+        {
+          type: "arrange",
+          prompt: "Susun potongan cerita kita",
+          hint: "Unexpected plot twist",
+          sentence: "dari teman bercanda kita jadi saling sayang",
+          distractors: ["sekadar", "katanya"]
+        },
+        {
+          type: "match",
+          prompt: "Cocokkan hal-hal tentang kita",
+          pairs: [
+            ["sleep calling", "nemenin sampai tidur"],
+            ["mabar", "Roblox dan ML"],
+            ["inside joke", "gayut parkir"]
+          ]
+        }
+      ]
+    },
+    {
+      id: "lesson-3",
+      label: "How well do I know you?",
+      shortLabel: "Almost there, love",
+      icon: "crown",
+      accent: "green",
+      exercises: [
+        {
+          type: "match",
+          prompt: "Pasangkan fakta tentang kamu",
+          pairs: [
+            ["game favorit", "Violence District"],
+            ["tidur", "bisa 3 kali sehari"],
+            ["sarapan", "nasi lemak"],
+            ["hewan favorit", "kucing"]
+          ]
+        },
+        {
+          type: "listen",
+          prompt: "One more wish for you",
+          speech: "Dan semoga kamu didatangi banyak hal baik di tahun ini dan seterusnya.",
+          choices: [
+            "Dan semoga kamu didatangi banyak hal baik di tahun ini dan seterusnya.",
+            "Dan semoga kamu tidak gampang kena ragebait lagi.",
+            "Dan semoga nasi lemaknya selalu tersedia."
+          ],
+          answer: "Dan semoga kamu didatangi banyak hal baik di tahun ini dan seterusnya."
+        },
+        {
+          type: "choice",
+          prompt: "Pilih jawaban paling Ryues",
+          question: "Kalau lagi kangen, biasanya kamu jadi...",
+          choices: ["rewel", "cuek", "menghilang"],
+          answer: "rewel",
+          success: "Rewel, manja, dan clingy abis - but I love it."
+        },
+        {
+          type: "arrange",
+          prompt: "Susun final promise ini",
+          hint: "In every universe",
+          sentence: "i will be there for you always",
+          distractors: ["maybe", "sometimes"]
+        }
+      ]
+    }
   ]
 };
