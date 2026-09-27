@@ -329,11 +329,11 @@ function pathMarkup() {
         </div>
       </div>
       ${companions}
-      <div class="cheer-card">
-        <div class="cheer-face">${icon("heart")}</div>
-        <div><strong>${progressPercent()}% selesai</strong><span>${isChestUnlocked() ? "Chest sudah siap dibuka!" : "Sedikit demi sedikit."}</span></div>
-      </div>
     </section>
+    <div class="cheer-card">
+      <div class="cheer-face">${icon("heart")}</div>
+      <div><strong>${progressPercent()}% selesai</strong><span>${isChestUnlocked() ? "Chest sudah siap dibuka!" : "Sedikit demi sedikit."}</span></div>
+    </div>
   `;
 }
 
