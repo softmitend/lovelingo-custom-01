@@ -40,6 +40,7 @@ function openExternalCourse() {
   setTextIfChanged(label, "Sudah dibuka • buka lagi");
   node?.classList.add("custom-external-visited");
   guardChest();
+  window.dispatchEvent(new CustomEvent("lovelingo:progress-changed"));
 }
 
 function ensureExternalCourse() {

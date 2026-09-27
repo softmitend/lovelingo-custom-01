@@ -3,6 +3,7 @@ import { experience } from "./data.js";
 
 const STORAGE_KEY = "lovelingo-progress-v1";
 const THEME_KEY = "lovelingo-theme";
+const EXTERNAL_COURSE_KEY = "lovelingo-custom-01-external-course-opened";
 const defaultState = {
   completed: [],
   xp: 0,
@@ -394,7 +395,7 @@ function rightRail() {
       <section class="rail-card">
         <div class="rail-title"><h3>Progress</h3><span>${progressPercent()}%</span></div>
         <div class="rail-progress"><span style="width:${progressPercent()}%"></span></div>
-        <p>${state.completed.length} dari ${experience.lessons.length} lesson selesai</p>
+        <p>${completedProgressSteps()} dari ${totalProgressSteps()} tahap selesai</p>
       </section>
       <section class="rail-card streak-card">
         <div class="streak-emoji">${icon("letter")}</div>
@@ -415,9 +416,20 @@ function mobileNav() {
 }
 
 function progressPercent() {
-  const total = experience.lessons.length + 1;
-  const complete = state.completed.length + (state.chestOpened ? 1 : 0);
-  return Math.round((complete / total) * 100);
+  return Math.round((completedProgressSteps() / totalProgressSteps()) * 100);
+}
+
+function totalProgressSteps() {
+  return experience.lessons.length + 2;
+}
+
+function completedProgressSteps() {
+  const lessonIds = new Set(experience.lessons.map((lesson) => lesson.id));
+  const completedLessons = new Set(state.completed.filter((id) => lessonIds.has(id))).size;
+  const lessonsComplete = completedLessons === experience.lessons.length;
+  const externalCourseOpened = lessonsComplete && localStorage.getItem(EXTERNAL_COURSE_KEY) === "yes";
+  const chestOpened = externalCourseOpened && state.chestOpened;
+  return completedLessons + (externalCourseOpened ? 1 : 0) + (chestOpened ? 1 : 0);
 }
 
 function bindHomeEvents() {
@@ -521,6 +533,7 @@ function resetProgress() {
     mood: "worried",
     onConfirm: () => {
       state = { ...defaultState };
+      localStorage.removeItem(EXTERNAL_COURSE_KEY);
       saveState();
       renderApp();
     }
@@ -1146,5 +1159,6 @@ function bindPageLinkLoader() {
 
 setTheme(getTheme(), { persist: false });
 bindPageLinkLoader();
+window.addEventListener("lovelingo:progress-changed", renderApp);
 renderApp();
 withLoveLingoLoading(() => {}, { message: "Menyiapkan LoveLingo...", duration: 1250 });
