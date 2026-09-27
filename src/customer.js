@@ -12,10 +12,16 @@ function hasOpenedExternalCourse() {
   return localStorage.getItem(EXTERNAL_KEY) === "yes";
 }
 
+function setTextIfChanged(element, text) {
+  if (element && element.textContent !== text) element.textContent = text;
+}
+
 function openExternalCourse() {
   localStorage.setItem(EXTERNAL_KEY, "yes");
   window.open(EXTERNAL_COURSE_URL, "_blank", "noopener,noreferrer");
-  enhanceHome();
+  const label = document.querySelector("[data-external-course] .lesson-copy span");
+  setTextIfChanged(label, "Sudah dibuka • buka lagi");
+  guardChest();
 }
 
 function ensureExternalCourse() {
@@ -50,6 +56,9 @@ function guardChest() {
   }
 
   const copy = chest.closest(".chest-stop")?.querySelector(".lesson-copy");
+  const title = copy?.querySelector("strong");
+  const subtitle = copy?.querySelector("span");
+
   if (!hasOpenedExternalCourse()) {
     if (!chest.disabled) chestWasNaturallyUnlocked = true;
     chest.disabled = true;
@@ -58,8 +67,8 @@ function guardChest() {
     if (copy && chestWasNaturallyUnlocked) {
       copy.classList.remove("unlocked");
       copy.classList.add("locked");
-      copy.querySelector("strong")?.replaceChildren(document.createTextNode("Final chest"));
-      copy.querySelector("span")?.replaceChildren(document.createTextNode("Buka course tambahan dulu"));
+      setTextIfChanged(title, "Final chest");
+      setTextIfChanged(subtitle, "Buka course tambahan dulu");
     }
     return;
   }
@@ -71,7 +80,7 @@ function guardChest() {
     if (copy) {
       copy.classList.remove("locked");
       copy.classList.add("unlocked");
-      copy.querySelector("span")?.replaceChildren(document.createTextNode("Ada sesuatu untukmu"));
+      setTextIfChanged(subtitle, "Ada sesuatu untukmu");
     }
   }
 }
