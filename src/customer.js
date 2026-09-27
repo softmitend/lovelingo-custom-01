@@ -252,7 +252,7 @@ function enhanceFinalGift() {
         <i class="bi bi-patch-check-fill"></i><span><b>Lihat sertifikat adopsi Selfie</b><small>PDF certificate of adoption</small></span><i class="bi bi-arrow-up-right"></i>
       </a>
       <a class="customer-gift-button story" href="${BACKGROUND_STORY_URL}" target="_blank" rel="noopener noreferrer">
-        <i class="bi bi-journal-heart"></i><span><b>Baca kisah Selfie</b><small>Perjalanan penyelamatan dan rehabilitasinya</small></span><i class="bi bi-arrow-up-right"></i>
+        <i class="bi bi-journal-text"></i><span><b>Baca kisah Selfie</b><small>Perjalanan penyelamatan dan rehabilitasinya</small></span><i class="bi bi-arrow-up-right"></i>
       </a>
     </div>
     <div class="customer-music-note"><i class="bi bi-music-note-beamed"></i><span>Lagu akan tetap diputar selama halaman LoveLingo ini tetap terbuka. Link hadiah sengaja dibuka di tab baru.</span></div>
