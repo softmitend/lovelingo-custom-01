@@ -432,6 +432,13 @@ function completedProgressSteps() {
   return completedLessons + (externalCourseOpened ? 1 : 0) + (chestOpened ? 1 : 0);
 }
 
+function scrollIntoVerticalCenter(element) {
+  if (!element) return;
+  const rect = element.getBoundingClientRect();
+  const top = window.scrollY + rect.top - (window.innerHeight - rect.height) / 2;
+  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+}
+
 function bindHomeEvents() {
   document.querySelectorAll("[data-lesson]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -451,7 +458,7 @@ function bindHomeEvents() {
       if (isChestUnlocked()) {
         withLoveLingoLoading(openChest, { message: "Membuka pesan spesial...", duration: 1550 });
       } else {
-        document.querySelector(".chest-stop")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        scrollIntoVerticalCenter(document.querySelector(".chest-stop"));
       }
     });
   });
@@ -498,6 +505,10 @@ function syncPathLine() {
   const svg = stage?.querySelector(".path-line");
   const path = svg?.querySelector("path");
   if (!stage || !svg || !path) return;
+
+  // A transformed stop can make scrollIntoView move this overflow container
+  // sideways. Keep the route in its intended horizontal coordinate space.
+  if (stage.scrollLeft !== 0) stage.scrollLeft = 0;
 
   const nodes = [
     ...stage.querySelectorAll(".lesson-node"),
@@ -1067,7 +1078,9 @@ function finishLesson() {
     withLoveLingoLoading(() => {
       root.innerHTML = "";
       renderApp();
-      setTimeout(() => document.querySelector(`[data-path-stop="${Math.min(currentLessonIndex + 1, 2)}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
+      setTimeout(() => {
+        scrollIntoVerticalCenter(document.querySelector(`[data-path-stop="${Math.min(currentLessonIndex + 1, 2)}"]`));
+      }, 50);
     }, { message: "Membuka level berikutnya...", duration: 1450 });
   });
 }

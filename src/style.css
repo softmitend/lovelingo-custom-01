@@ -1820,7 +1820,8 @@ html[data-theme="dark"] .theme-toggle-compact:hover {
     width: 100%;
     min-height: 850px;
     padding-top: 76px;
-    overflow: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   /* A gentler Duolingo snake. The old +/-68px swing made the route look
@@ -2277,7 +2278,7 @@ html[data-theme="dark"] .lovelingo-loader-shadow {
   }
 
   .path-stage {
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100%;
   }
 

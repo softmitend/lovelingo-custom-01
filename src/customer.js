@@ -132,6 +132,8 @@ function syncCustomerPathLine() {
   const path = svg?.querySelector("path");
   if (!stage || !svg || !path) return;
 
+  if (stage.scrollLeft !== 0) stage.scrollLeft = 0;
+
   const nodes = [
     ...stage.querySelectorAll(".lesson-node:not(.custom-external-node)"),
     stage.querySelector(".custom-external-node"),
