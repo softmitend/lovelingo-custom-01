@@ -1316,10 +1316,6 @@ body,
   transition: transform .2s cubic-bezier(.2,.8,.2,1);
 }
 
-html[data-theme="dark"] .theme-switch-track {
-  background: var(--blue);
-}
-
 html[data-theme="dark"] .theme-switch-knob {
   transform: translateX(18px);
 }
