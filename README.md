@@ -21,6 +21,7 @@ npm run build
 - Final chest waits for the external course to be opened after the internal lessons are complete.
 - Final chest includes a Notion gift button.
 - Final chest includes a certificate-of-adoption button.
+- Final chest includes Selfie's bilingual background story.
 - Gift music starts when the chest itself is opened.
 - External gift links open in a new tab so the LoveLingo page can keep playing the music.
 
@@ -31,6 +32,7 @@ Place these exact files in `public/assets/`:
 ```text
 public/assets/hanya-untukmu.m4a
 public/assets/certificate-adoption.pdf
+public/assets/selfie-background-story.pdf
 ```
 
 The customer integration already points to those paths.

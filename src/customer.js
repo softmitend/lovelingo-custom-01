@@ -1,6 +1,7 @@
 const EXTERNAL_COURSE_URL = "https://shortlink.win/1yTtJ";
 const NOTION_GIFT_URL = "https://app.notion.com/p/Karena-ini-harimu-maka-tersenyumlah-3e6a0474ccce80cfb38bee4a26bc3d60?source=copy_link";
 const CERTIFICATE_URL = "/assets/certificate-adoption.pdf";
+const BACKGROUND_STORY_URL = "/assets/selfie-background-story.pdf";
 const MUSIC_URL = "/assets/hanya-untukmu.m4a";
 const EXTERNAL_KEY = "lovelingo-custom-01-external-course-opened";
 
@@ -179,6 +180,9 @@ function enhanceFinalGift() {
       </a>
       <a class="customer-gift-button certificate" href="${CERTIFICATE_URL}" target="_blank" rel="noopener noreferrer">
         <i class="bi bi-patch-check-fill"></i><span><b>Lihat sertifikat adopsi Selfie</b><small>PDF certificate of adoption</small></span><i class="bi bi-arrow-up-right"></i>
+      </a>
+      <a class="customer-gift-button story" href="${BACKGROUND_STORY_URL}" target="_blank" rel="noopener noreferrer">
+        <i class="bi bi-journal-heart"></i><span><b>Baca kisah Selfie</b><small>Perjalanan penyelamatan dan rehabilitasinya</small></span><i class="bi bi-arrow-up-right"></i>
       </a>
     </div>
     <div class="customer-music-note"><i class="bi bi-music-note-beamed"></i><span>Lagu akan tetap diputar selama halaman LoveLingo ini tetap terbuka. Link hadiah sengaja dibuka di tab baru.</span></div>
