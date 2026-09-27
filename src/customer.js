@@ -30,6 +30,12 @@ function setTextIfChanged(element, text) {
   if (element && element.textContent !== text) element.textContent = text;
 }
 
+function externalCourseIconMarkup(unlocked) {
+  return unlocked
+    ? '<span class="custom-external-icon"><i class="bi bi-journal-bookmark-fill"></i></span>'
+    : '<span class="svg-icon" aria-hidden="true"><i class="bi bi-lock-fill"></i></span>';
+}
+
 function openExternalCourse() {
   if (!areInternalLessonsComplete()) return;
 
@@ -54,8 +60,8 @@ function ensureExternalCourse() {
   node.className = "path-stop right custom-external-stop";
   node.dataset.externalCourse = "true";
   node.innerHTML = `
-    <button class="lesson-node ${unlocked ? "unlocked" : "locked"} custom-external-node ${done ? "custom-external-visited" : ""}" type="button" ${unlocked ? "" : "disabled"} aria-label="${unlocked ? "Buka course tambahan" : "Selesaikan semua lesson untuk membuka course tambahan"}">
-      <span class="node-face"><span class="custom-external-icon"><i class="bi bi-journal-bookmark-fill"></i></span></span>
+    <button class="lesson-node ${unlocked ? "unlocked" : "locked"} custom-external-node ${done ? "custom-external-visited" : ""}" data-icon-state="${unlocked ? "unlocked" : "locked"}" type="button" ${unlocked ? "" : "disabled"} aria-label="${unlocked ? "Buka course tambahan" : "Selesaikan semua lesson untuk membuka course tambahan"}">
+      <span class="node-face">${externalCourseIconMarkup(unlocked)}</span>
     </button>
     <div class="lesson-copy ${unlocked ? "unlocked" : "locked"}">
       <strong>Course tambahan</strong>
@@ -71,12 +77,18 @@ function ensureExternalCourse() {
 function syncExternalCourse() {
   const wrapper = document.querySelector("[data-external-course]");
   const node = wrapper?.querySelector(".custom-external-node");
+  const face = node?.querySelector(".node-face");
   const copy = wrapper?.querySelector(".lesson-copy");
   const subtitle = copy?.querySelector("span");
-  if (!node || !copy) return;
+  if (!node || !face || !copy) return;
 
   const unlocked = areInternalLessonsComplete();
   const done = hasOpenedExternalCourse();
+  const iconState = unlocked ? "unlocked" : "locked";
+  if (node.dataset.iconState !== iconState) {
+    face.innerHTML = externalCourseIconMarkup(unlocked);
+    node.dataset.iconState = iconState;
+  }
   node.disabled = !unlocked;
   node.classList.toggle("unlocked", unlocked);
   node.classList.toggle("locked", !unlocked);
