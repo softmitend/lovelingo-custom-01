@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#58cc02" />
+    <meta name="description" content="LoveLingo custom journey." />
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem("lovelingo-theme");
+          document.documentElement.dataset.theme = savedTheme === "dark" ? "dark" : "light";
+          document.documentElement.style.colorScheme = document.documentElement.dataset.theme;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="/src/customer.css" />
+    <title>LoveLingo</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2358cc02' d='M8 14s6-3.33 6-8A3.5 3.5 0 0 0 8 3.55 3.5 3.5 0 0 0 2 6c0 4.67 6 8 6 8Z'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/customer.js"></script>
+  </body>
+</html>
