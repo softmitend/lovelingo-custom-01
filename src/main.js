@@ -471,6 +471,23 @@ function observePathLine() {
   pathResizeObserver.observe(stage);
 }
 
+function stablePathPoint(stageRect, node) {
+  const stop = node.closest(".path-stop");
+  if (!stop) {
+    const rect = node.getBoundingClientRect();
+    return {
+      x: rect.left - stageRect.left + rect.width / 2,
+      y: rect.top - stageRect.top + rect.height / 2
+    };
+  }
+
+  const stopRect = stop.getBoundingClientRect();
+  return {
+    x: stopRect.left - stageRect.left + stopRect.width / 2,
+    y: stopRect.top - stageRect.top + node.offsetTop + node.offsetHeight / 2
+  };
+}
+
 function syncPathLine() {
   const stage = document.querySelector(".path-stage");
   const svg = stage?.querySelector(".path-line");
@@ -486,13 +503,7 @@ function syncPathLine() {
   const stageRect = stage.getBoundingClientRect();
   const width = stage.clientWidth;
   const height = stage.scrollHeight;
-  const points = nodes.map((node) => {
-    const rect = node.getBoundingClientRect();
-    return {
-      x: rect.left - stageRect.left + rect.width / 2,
-      y: rect.top - stageRect.top + rect.height / 2
-    };
-  });
+  const points = nodes.map((node) => stablePathPoint(stageRect, node));
 
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.setAttribute("preserveAspectRatio", "none");
@@ -516,10 +527,9 @@ function syncCompanionAlignment(stage) {
     if (!target || !badge) return;
 
     const stageRect = stage.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
+    const targetPoint = stablePathPoint(stageRect, target);
     const badgeRect = badge.getBoundingClientRect();
-    const targetCenterY = targetRect.top - stageRect.top + targetRect.height / 2;
-    companion.style.top = `${targetCenterY - badgeRect.height / 2}px`;
+    companion.style.top = `${targetPoint.y - badgeRect.height / 2}px`;
   });
 }
 
